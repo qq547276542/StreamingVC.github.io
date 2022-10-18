@@ -6,12 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
-<link rel="stylesheet" href="../css/normalize.css">
-<link rel="stylesheet" href="../css/skeleton.css">
-<link rel="stylesheet" href="../css/custom.css">
-<link rel="alternate" href="index.xml" type="application/rss+xml" title="Speech Research">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/skeleton.css">
+<link rel="stylesheet" href="css/custom.css">
+<!-- <link rel="alternate" href="index.xml" type="application/rss+xml" title="Speech Research"> -->
 <link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
-<title>Title: xxxx xxx</title>
+<title>Streaming Voice Conversion Via Intermediate Bottleneck Features And Non-streaming Teacher Guidance</title>
 </head>
 <body>
 
@@ -19,74 +19,441 @@
 
 	<header role="banner">
 		
-			
-		
 		
 	</header>
 
 
 	<main role="main">
 		<article itemscope itemtype="https://schema.org/BlogPosting">
-            <h1 class="entry-title" itemprop="headline">Title: xxxx xxxx xxxx xxxx xxxx</h1>
+            <h1 class="entry-title" itemprop="headline">Streaming Voice Conversion Via Intermediate Bottleneck Features And Non-streaming Teacher Guidance</h1>
 			
 			<section itemprop="entry-text">
                 <br>
-<p>arXiv: <a href="https://arxiv.org/abs/2205.04421">arXiv:666.6666</a></p>
+<!-- <p>arXiv: <a href="https://arxiv.org/abs/2205.04421">arXiv:666.6666</a></p> -->
 				
 				
 <h2 id="authors">Authors</h2>
-Yuanzhe Chen, AA, BB, CC, ...<br>
+Yuanzhe Chen, Ming Tu, Tang Li, Xin Li, Qiuqiang Kong, Jiaxin Li, Zhichao Wang, Qiao Tian, Yuping Wang, Yuxuan Wang<br>
 <br>
 Speech, Audio & Music Intelligence (SAMI), ByteDance Inc. <br>
 
 				
 <h2 id="abstract">Abstract</h2>
-<p>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx. </p>
+<p>Streaming voice conversion (VC) is the task of converting the voice of one person to another in real-time. Previous streaming VC methods use phonetic posteriorgrams (PPGs) extracted from automatic speech recognition (ASR) systems to represent speaker-independent information.
+  However, PPGs lack the prosody and vocalization information of the source speaker, and streaming PPGs contain undesired leaked timbre of the source speaker. In this paper, we propose to use intermediate bottleneck features (IBFs) to replace PPGs. VC systems trained with IBFs retain more prosody and vocalization information of the source speaker. Furthermore, we propose a non-streaming teacher guidance (TG) framework that addresses the timbre leakage problem. Experiments show that our proposed IBFs and the TG framework achieve a state-of-the-art non-streaming VC naturalness of 3.85, a content consistency of 3.77, and a timbre similarity of 3.77 which significantly outperform previous streaming VC systems.</p>
+
+<h2 id="overview">Overview</h2>
+<img src="img/Framework.png">
+
 <h2 id="audio-samples">Audio Samples</h2>
-<h3 id="audio-samples">Comparison with Recording</h3>
+<p> In this demo, we present streaming voice conversion results using the following models:</p>
+<li> <b>Baseline:</b> Baseline method, PPGs-based streaming voice conversion based on reconstruction training. (PPGs+Rec) </li>
+<!-- <li> <b>Teacher:</b>  IBFs-based non-streaming  voice conversion based on reconstruction training, which is used to guide student training. </li>
+<li> <b>Teacher <font color="#FF0000">w/o IBFs</font>:</b> Based on the Teacher, replace IBFs with PPGs.  </li> -->
+<li> <b>Proposed:</b> Our proposed method, <b>IBFs</b>-based streaming voice conversion based on <b>teacher guidance</b> training. (IBFs+TG)</li>
+<li> <b>Proposed <font color="#FF0000">w/o IBFs</font>:</b> PPGs-based streaming voice conversion based on <b>teacher guidance</b> training. (PPGs+TG)</li>
+<li> <b>Proposed <font color="#FF0000">w/o TG </font>:</b>  <b>IBFs</b>-based streaming voice conversion based on reconstruction training. (IBFs+Rec)</li>
+
+<p>  </p>
+<p> For fair comparison, all systems use the same streaming ASR (sub-)encoder and same streaming vocoder, chunk_size=160ms.   To emphasize the robustness of our proposed method, we demonstrate some difficult cases, including slurred and exaggeration pronunciation, or with laughter, breathing, noise, etc.</p>
+<p></p>
 
 
-<p><em>xxxx.</em></p>
-<table>
-<thead>
+<div class="table-wrapper">
+  <table>
+  <thead>
+  <tr>
+      <th>Source Speech</th>
+      <th>Target Speech</th>
+      <th></th>
+      <th>Conversion Speech</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+      <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/1/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      <td style="text-align: center">Baseline</td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+  </tr>
+  <tr>
+      <td style="text-align: center">Proposed</td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+  </tr>
+  <tr>
+    <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+    </td>
+  </tr>
+  <tr>
+      <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      <td style="text-align: center">Baseline</td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+  </tr>
 <tr>
-<th style="text-align: center">ours</th>
-<th style="text-align: center">Recording</th>
+    <td style="text-align: center">Proposed</td>
+    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+    </td>
 </tr>
-</thead>
-<tbody>
 <tr>
-<td style="text-align: center"><audio controls="controls" ><source src="audio/xx.wav" autoplay/>Your browser does not support the audio element.</audio></td>
-<td style="text-align: center"><audio controls="controls" ><source src="audio/xx.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+  <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+  </td>
 </tr>
-</tbody>
-</table>
-<p><em>xxxxx.</em></p>
-<table>
-<thead>
 <tr>
-<th style="text-align: center">ours</th>
-<th style="text-align: center">Recording</th>
+  <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/1/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+  </td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center"><audio controls="controls" ><source src="audio/xx.wav" autoplay/>Your browser does not support the audio element.</audio></td>
-<td style="text-align: center"><audio controls="controls" ><source src="audio/xx.wav" autoplay/>Your browser does not support the audio element.</audio></td>
-</tr>
-</tbody>
-</table>						
+  </tbody>
 
 
+
+  <tbody>
+    <tr>
+        <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/2/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        <td style="text-align: center">Baseline</td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center">Proposed</td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+    </tr>
+    <tr>
+        <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        <td style="text-align: center">Baseline</td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+    </tr>
+  <tr>
+      <td style="text-align: center">Proposed</td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+  </tr>
+  <tr>
+    <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/2/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+    </td>
+  </tr>
+    </tbody>
+
+
+
+    <tbody>
+      <tr>
+          <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/3/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          <td style="text-align: center">Baseline</td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">Proposed</td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+      </tr>
+      <tr>
+          <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          <td style="text-align: center">Baseline</td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+      </tr>
+    <tr>
+        <td style="text-align: center">Proposed</td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+      <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/3/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+      </td>
+    </tr>
+      </tbody>
+
+
+
+      <tbody>
+        <tr>
+            <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/4/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align: center">Baseline</td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </tr>
+        <tr>
+            <td style="text-align: center">Proposed</td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+        </tr>
+        <tr>
+            <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            <td style="text-align: center">Baseline</td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+        </tr>
+      <tr>
+          <td style="text-align: center">Proposed</td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+        <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/4/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+        </td>
+      </tr>
+        </tbody>
+ 
+        
+        <tbody>
+          <tr>
+              <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/5/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              <td style="text-align: center">Baseline</td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </tr>
+          <tr>
+              <td style="text-align: center">Proposed</td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+          </tr>
+          <tr>
+            <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+          </tr>
+          <tr>
+              <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              <td style="text-align: center">Baseline</td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+          </tr>
+        <tr>
+            <td style="text-align: center">Proposed</td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+        </tr>
+        <tr>
+          <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+          <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/5/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+          </td>
+        </tr>
+          </tbody>
+
+          
+          <tbody>
+            <tr>
+                <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/6/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align: center">Baseline</td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </tr>
+            <tr>
+                <td style="text-align: center">Proposed</td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+            </tr>
+            <tr>
+                <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                <td style="text-align: center">Baseline</td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+            </tr>
+          <tr>
+              <td style="text-align: center">Proposed</td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+          </tr>
+          <tr>
+            <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+            <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/6/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+            </td>
+          </tr>
+            </tbody>
+      
+
+
+            <tbody>
+              <tr>
+                  <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/7/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  <td style="text-align: center">Baseline</td>
+                  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </tr>
+              <tr>
+                  <td style="text-align: center">Proposed</td>
+                  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  </td>
+              </tr>
+              <tr>
+                <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+              </tr>
+              <tr>
+                  <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  <td style="text-align: center">Baseline</td>
+                  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  </td>
+              </tr>
+            <tr>
+                <td style="text-align: center">Proposed</td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+              <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/7/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+              </td>
+            </tr>
+              </tbody>
+
+
+
+              <tbody>
+                <tr>
+                    <td style="text-align: center" rowspan="8"><audio controls="controls" ><source src="wav/daily/8/input.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                    <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                    <td style="text-align: center">Baseline</td>
+                    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/bl_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </tr>
+                <tr>
+                    <td style="text-align: center">Proposed</td>
+                    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/proposed_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                    </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">Proposed<font color="#FF0000"> w/o IBFs </font></td>
+                  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/wo_ibf_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">Proposed<font color="#FF0000"> w/o TG </font> </td>
+                  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/wo_tg_f.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center" rowspan="4"><audio controls="controls" ><source src="wav/target_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                    <td style="text-align: center">Baseline</td>
+                    <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/bl_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                    </td>
+                </tr>
+              <tr>
+                  <td style="text-align: center">Proposed</td>
+                  <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/proposed_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                  </td>
+              </tr>
+              <tr>
+                <td style="text-align: center">Proposed <font color="#FF0000">w/o IBFs</font> </td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/wo_ibf_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align: center">Proposed <font color="#FF0000">w/o TG</font> </td>
+                <td style="text-align: center"><audio controls="controls" ><source src="wav/daily/8/wo_tg_m.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+                </td>
+              </tr>
+                </tbody>
+
+
+  
 
 			</section>
 		</article>
 	</main>
 
 
-	
-
 </div>
+
+
+
+
 
 <script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
